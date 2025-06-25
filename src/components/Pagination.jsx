@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import style from './Pagination.module.css'
+import { useSnackbar } from "notistack";
 
 function PaginationPage({ updatePage, currentPage, totalPages }) {
 
@@ -37,15 +38,23 @@ function Pagination() {
   const [currentEmployeeList, setCurrentEmployeeList] = useState([]);
   const maxRecords = 10;
   const [totalPages, setTotalPages] = useState(0)
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    try {
-      const response = axios.get('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json');
-      response.then(data => setEmployeeList(data.data));
-    } catch (error) {
-      console.log(error);
-      alert('failed to fetch data');
-    }    
+     const END_POINT = 'https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json';
+      axios.get(END_POINT)
+      .then(data => setEmployeeList(data.data)).catch(e => alert('failed to fetch data'));
+    // } catch (e) {
+    //   if(e.response && e.response.status === 500) {
+    //     enqueueSnackbar('failed to fetch data', {
+    //       variant : 'error'
+    //     })
+    //   } else {
+    //     enqueueSnackbar("Something went wrong", {
+    //       variant : 'error'
+    //     })
+    //   }
+    // }    
   },[]);
 
   useEffect(() => {
@@ -82,7 +91,7 @@ function Pagination() {
           <tbody className={style.tblbody}>
             {
             currentEmployeeList.map((emp) => (
-              <tr>
+              <tr key={emp.id}>
                 <td>{emp.id}</td>
                 <td>{emp.name}</td>
                 <td>{emp.email}</td>
