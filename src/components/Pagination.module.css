@@ -33,3 +33,24 @@
 .tblbody tr:nth-child(even) {
     background-color: #f3f4f6; /* gray-100 */
 }
+.paginationWrapper {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.paginationWrapper > button {
+    background-color: #0f766e;
+    color: #ffffff;
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+}
+.pageCount {
+    background-color: #0f766e;
+    color: #ffffff;
+    margin: 0px 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
